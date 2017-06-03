@@ -13,19 +13,19 @@ var helpers = require("./utils/helpers");
 var Main = React.createClass({
 
   // Here we set a generic state associated with the number of clicks
-  // Note how we added in this history state variable
+  // Note how we added in this article state variable
   getInitialState: function() {
-    return { searchTerm: "", results: "", history: [] };
+    return { searchTerm: "", results: "", article: [] };
   },
 
-  // The moment the page renders get the History
+  // The moment the page renders get the Article
   componentDidMount: function() {
-    // Get the latest history.
-    helpers.getHistory().then(function(response) {
+    // Get the latest article.
+    helpers.getArticle().then(function(response) {
       console.log(response);
-      if (response !== this.state.history) {
-        console.log("History", response.data);
-        this.setState({ history: response.data });
+      if (response !== this.state.article) {
+        console.log("Article", response.data);
+        this.setState({ article: response.data });
       }
     }.bind(this));
   },
@@ -33,23 +33,25 @@ var Main = React.createClass({
   // If the component changes (i.e. if a search is entered)...
   componentDidUpdate: function() {
 
-    // Run the query for the address
-    helpers.runQuery(this.state.searchTerm).then(function(data) {
+    // Run the query for the title
+    helpers.runArtilceQuery(this.state.searchTerm).then(function(data) {
       if (data !== this.state.results) {
-        console.log("Address", data);
+        console.log("Title: ");
+        console.log(data);
         this.setState({ results: data });
 
-        // After we've received the result... then post the search term to our history.
-        helpers.postHistory(this.state.searchTerm).then(function() {
+        // After we've received the result... then post the search term to our article.
+        helpers.postArticle(this.state.searchTerm).then(function() {
           console.log("Updated!");
 
-          // After we've done the post... then get the updated history
-          helpers.getHistory().then(function(response) {
-            console.log("Current History", response.data);
+          // After we've done the post... then get the updated article
+          helpers.getArticle().then(function(response) {
+            console.log("Current Article");
+            console.log("Current Article", response.data);
 
-            console.log("History", response.data);
+            console.log("Article", response.data);
 
-            this.setState({ history: response.data });
+            //this.setState({ article: response.data });
 
           }.bind(this));
         }.bind(this));
@@ -66,9 +68,9 @@ var Main = React.createClass({
       <div className="container">
         <div className="row">
           <div className="jumbotron">
-            <h2 className="text-center">Address Finder!</h2>
+            <h2 className="text-center">New York Times Search</h2>
             <p className="text-center">
-              <em>Enter a landmark to search for its exact address (ex: "Eiffel Tower").</em>
+              <em>Enter a subject to search the New York Times for it (ex: "Ron Paul").</em>
             </p>
           </div>
 
@@ -80,17 +82,17 @@ var Main = React.createClass({
 
           <div className="col-md-6">
 
-            <Results address={this.state.results} />
+            <Results title={this.state.title} />
 
           </div>
 
         </div>
 
-        <div className="row">
+        {/*<div className="row">
 
-          <History history={this.state.history} />
+          <Article article={this.state.article} />
 
-        </div>
+        </div>*/}
 
       </div>
     );
