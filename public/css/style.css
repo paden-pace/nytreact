@@ -1,0 +1,50 @@
+
+
+body {
+    background-color: #ffffff;
+    
+}
+
+.jumbotron>h2{
+    font-family: 'Pirata One', cursive;
+    font-size: 60px;
+}
+
+.jumbotron{
+    margin-top: 20px;
+    background-color: #cfcfcf;
+    border: solid 2px #000000;
+}
+
+
+h3 {
+    color: Gold;
+}
+
+.panel-title{
+    color: white;
+}
+
+.panel{
+    border: solid 2px #000000;
+}
+
+.panel-body{
+    background-color:  #cfcfcf;
+}
+
+.panel-default>.panel-heading {
+    background-color: #000000;
+    color: white;
+    font-family: 'Pirata One', cursive;
+    font-size: 40px;
+}
+
+.panel-default>.panel-heading>.panel-title {
+    font-family: 'Pirata One', cursive;
+    font-size: 30px;
+}
+
+.results-single{
+    border-bottom: solid 1px #000000;
+}
