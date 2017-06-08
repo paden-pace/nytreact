@@ -24,8 +24,7 @@ app.use(express.static("./public"));
 // -------------------------------------------------
 // ---------  define local MongoDB URI ----------
 var localMongo = "mongodb://localhost/nytlocal";
-//var MONGODB_URI = 'mongodb://<dbuser>:<dbpassword>@ds151059.mlab.com:51059/heroku_3b1g6fml';
-
+var MONGODB_URI = 'mongodb://<dbuser>:<dbpassword>@ds117592.mlab.com:17592/heroku_24s9cjl6'
 //mongoose.connect(localMongo);
 
 if (process.env.MONGODB_URI){
