@@ -27,21 +27,26 @@ var helper = {
   //   });
   // },
 
-  runArtilceQuery: function(term) {
+  runArtilceQuery: function(term, start, end) {
+    console.log("term start end");
     console.log(term);
+    console.log(start);
+    console.log(end);
 
-    var newQueryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + term + "&api-key=" + apiKey;
+    var newQueryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + term + "&begin_date="+ start+ "&end_date="+ end+ "&api-key=" + apiKey;
     return axios.get(newQueryURL).then(function(response) {
 
       var displayArray = [];
-
-        var display = {
-          title : response.data.response.docs[0].headline.main,
-          date : response.data.response.docs[0].pub_date,
-          url : response.data.response.docs[0].web_url
-        };
-        displayArray.push(display);
-
+      for (var i = 0; i<response.data.response.docs.length; i++)
+        {
+          //console.log(response.data.response.docs[i].headline);
+          var display = {
+            title : response.data.response.docs[i].headline.main,
+            date : response.data.response.docs[i].pub_date,
+            url : response.data.response.docs[i].web_url
+          };
+          displayArray.push(display);
+        }
 
       console.log("This is Display");
       console.log(displayArray);
@@ -53,7 +58,7 @@ var helper = {
       } else {
         console.log("It don't exists");
       }
-      // If we don't get any results, return an empty string
+      //If we don't get any results, return an empty string
       return "";
     });
   },
@@ -64,10 +69,30 @@ var helper = {
   },
 
   // This function posts new searches to our database.
-  postArticle: function(title) {
-    return axios.post("/api", { title: title });
+  postArticle: function(newArticle) {
+    console.log("Value from helpers.js")
+    console.log(newArticle);
+    return axios.post("/api", { 
+      title: newArticle.title,
+      date: newArticle.date,
+      url: newArticle.url });
+  },
+
+    // This function posts new searches to our database.
+  deleteArticle: function(id) {
+    console.log("Delete Value from helpers.js")
+    console.log(id);
+  //   var thisId = $(this).attr("data-id");
+  //   console.log("thisId");
+  //   console.log(thisId);
+    return axios.post("/delete", { id: id });
+  //     date: newArticle.date,
+  //     url: newArticle.url });
+    
   }
 };
+
+
 
 // We export the API helper
 module.exports = helper;

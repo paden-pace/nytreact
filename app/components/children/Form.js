@@ -6,14 +6,19 @@ var Form = React.createClass({
 
   // Here we set a generic state associated with the text being searched for
   getInitialState: function() {
-    return { term: "" };
+    return { term: "", start: "", end: ""};
+
   },
 
   // This function will respond to the user input
   handleChange: function(event) {
-
     this.setState({ term: event.target.value });
-
+  },
+  handleStartChange: function(event) {
+    this.setState({ start: event.target.value });
+  },
+  handleEndChange: function(event) {
+    this.setState({ end: event.target.value });
   },
 
   // When a user submits...
@@ -23,22 +28,20 @@ var Form = React.createClass({
     event.preventDefault();
 
     // Set the parent to have the search term
-    this.props.setTerm(this.state.term);
-    this.setState({ term: "" });
+    this.props.setTerm(this.state.term, this.state.start, this.state.end);
+    this.setState({ term: "" , start: "", end: ""});
   },
   // Here we describe this component's render method
   render: function() {
     return (
       <div className="panel panel-default">
         <div className="panel-heading">
-          <h3 className="panel-title text-center">Query</h3>
+          <h3 className="panel-title text-center"><strong>Search:</strong></h3>
         </div>
         <div className="panel-body text-center">
           <form onSubmit={this.handleSubmit}>
             <div className="form-group">
-              <h4 className="">
-                <strong>Location</strong>
-              </h4>
+              <h4 className="">Term:</h4>
 
               {/*
                 Note how each of the form elements has an id that matches the state.
@@ -53,6 +56,45 @@ var Form = React.createClass({
                 onChange={this.handleChange}
                 required
               />
+              <h4 className="">Start Date (YYYYMMDD):</h4>
+              <input
+                value={this.state.start}
+                type="text"
+                className="form-control text-center"
+                id="start"
+                onChange={this.handleStartChange}
+                required
+              />
+              <h4 className="">End Date (YYYYMMDD):</h4>
+              <input
+                value={this.state.end}
+                type="text"
+                className="form-control text-center"
+                id="end"
+                onChange={this.handleEndChange}
+                required
+              />
+              {/*<select name="cars">
+                <option value="01">January</option>
+                <option value="saab">Saab</option>
+                <option value="fiat">Fiat</option>
+                <option value="audi">Audi</option>
+              </select>*/}
+{/*begin_date  string
+Location: query ?begin_date=xyz
+end_date  string
+Location: query ?end_date=xyz
+
+"Format: YYYYMMDD
+
+*/}
+
+
+
+
+
+
+
               <br />
               <button
                 className="btn btn-primary"
